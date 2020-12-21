@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Restaurant.Data.Models
+namespace Restaurant.DAL.Data.Models
 {
     [Table("DishIngredients")]
     public class DishIngredient

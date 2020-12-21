@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Restaurant.Data.Models;
-using Restaurant.Features.Commands.OrderCRUD;
 
 namespace Restaurant.Controllers
 {
@@ -14,27 +11,27 @@ namespace Restaurant.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        //private readonly IMediator _mediator;
 
-        public OrderController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        //public OrderController(IMediator mediator)
+        //{
+        //    _mediator = mediator;
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] Order order)
-        {
-            var createCommand = new CreateOrder.Command(order);
-            var res = await _mediator.Send(createCommand);
-            return Ok(res);
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> CreateAsync([FromBody] Order order)
+        //{
+        //    var createCommand = new CreateOrder.Command(order);
+        //    var res = await _mediator.Send(createCommand);
+        //    return Ok(res);
+        //}
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id)
-        {
-            var command = new DeleteOrder.Command(id);
-            var res = await _mediator.Send(command);
-            return Ok(res);
-        }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteAsync(int id)
+        //{
+        //    var command = new DeleteOrder.Command(id);
+        //    var res = await _mediator.Send(command);
+        //    return Ok(res);
+        //}
     }
 }

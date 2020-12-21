@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Restaurant.Data.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Restaurant.DAL.Data.Models;
 
-namespace Restaurant.Data
+namespace Restaurant.DAL.Data
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -15,7 +14,7 @@ namespace Restaurant.Data
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<DishIngredient> DishIngredients { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<DishPortion> DishPortions { get; set; }
+        public DbSet<DishOrders> DishPortions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,10 +29,14 @@ namespace Restaurant.Data
                 .HasOne(di => di.Ingredient)
                 .WithMany(s => s.DishIngredients)
                 .HasForeignKey(di => di.IngredientId);
-            builder.Entity<DishPortion>()
+            builder.Entity<DishOrders>()
                .HasOne(di => di.Order)
-               .WithMany(s => s.DishPortions)
+               .WithMany(s => s.DishOrders)
                .HasForeignKey(di => di.OrderId);
+            builder.Entity<DishOrders>()
+              .HasOne(di => di.Dish)
+              .WithMany(s => s.DishOrders)
+              .HasForeignKey(di => di.DishId);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Restaurant.Data.Models
+namespace Restaurant.DAL.Data.Models
 {
     [Table("Orders")]
     public class Order
@@ -9,8 +9,9 @@ namespace Restaurant.Data.Models
         public int Id { get; set; }
         public int TableNumber { get; set; }
         public string OwnerName { get; set; }
+        public int TotalPrice { get; set; }
 
         // nav prop
-        public virtual ICollection<DishPortion> DishPortions { get; set; }
+        public virtual ICollection<DishOrders> DishOrders { get; set; }
     }
 }
