@@ -10,6 +10,8 @@ namespace Restaurant.BLL.Data
         {
             CreateMap<Dish, DishDto>();
             CreateMap<DishDto, Dish>();
+            CreateMap<IngredientDto, Ingredient>();
+            CreateMap<Ingredient, IngredientDto>();
         }
     }
 }
