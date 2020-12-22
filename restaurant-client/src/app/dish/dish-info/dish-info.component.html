@@ -18,10 +18,27 @@
     <span>Ingredients:</span>
     <ul class="ingredients" *ngFor="let i of dish.ingredients">
       <li class="ingredient">
-        {{i.name}}
+        <span>{{i.name}}</span>
+        <button class="btn btn-warning" (click)="deleteIngredient(i.id)">Delete</button>
       </li>
     </ul>
+
+    <form>
+      <input type="text"
+             placeholder="Search for a ingredient"
+             [matAutocomplete]="auto"
+             [(ngModel)]="searchText"
+             name="search"
+             (input)="updIngredients()"
+      >
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let ing of ingredientsAll" [value]="ing" (onSelectionChange)="addIngredient($event)">
+          {{ing.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </form>
+
   </div>
-  <button class="btm btn-primary" (click)="edit()">Edit</button>
-  <button class="btm btn-primary" (click)="saveDish()">Save</button>
+    <button class="btm btn-primary" (click)="edit()">Edit</button>
+    <button class="btm btn-primary" (click)="saveDish()">Save</button>
 </div>

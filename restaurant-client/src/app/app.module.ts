@@ -11,6 +11,9 @@ import {RouterModule} from '@angular/router';
 import {ApiService} from './services/api.service';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatOptionModule} from '@angular/material/core';
+import { SingleIngredientComponent } from './ingredient/single-ingredient/single-ingredient.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,8 @@ import {FormsModule} from '@angular/forms';
     MenuListComponent,
     DishInfoComponent,
     IngredientListComponent,
-    OrderComponent
+    OrderComponent,
+    SingleIngredientComponent
   ],
   imports: [
     BrowserModule,
@@ -28,11 +32,14 @@ import {FormsModule} from '@angular/forms';
         {path: 'menu', component: MenuListComponent},
         {path: 'dishes/:id', component: DishInfoComponent},
         {path: 'ingredients', component: IngredientListComponent},
+        {path: 'ingredient/:id', component: SingleIngredientComponent},
         {path: 'order', component: OrderComponent},
         {path: '**', redirectTo: 'menu'}
       ]),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatAutocompleteModule,
+    MatOptionModule
   ],
   providers: [ApiService ],
   bootstrap: [AppComponent]

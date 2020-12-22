@@ -57,8 +57,16 @@ namespace Restaurant.BLL.BusinessLogic
 
         public async Task<IEnumerable<IngredientDto>> GetByName(string name)
         {
-            var ingredient = await _ingredientRepository.GetByName(name);
-            return _mapper.Map<IEnumerable<IngredientDto>>(ingredient);
+            if (name.Equals("null"))
+            {
+                var ingredients = await _ingredientRepository.GetAll();
+                return _mapper.Map<IEnumerable<IngredientDto>>(ingredients);
+            }
+            else
+            {
+                var ingredient = await _ingredientRepository.GetByName(name);
+                return _mapper.Map<IEnumerable<IngredientDto>>(ingredient);
+            }
         }
 
         public async Task<IEnumerable<IngredientDto>> GetByDish(int id)

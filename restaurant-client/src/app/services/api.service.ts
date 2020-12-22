@@ -19,12 +19,15 @@ export class ApiService {
   getDishes(): Observable<Dish[]> {
     return this.http.get<Dish[]>(this.dishUrl);
   }
+
   getDish(id: number): Observable<Dish> {
     return this.http.get<Dish>(`${this.dishUrl}/${id}`);
   }
+
   getDishIngredients(dishId: number): Observable<Ingredient[]> {
     return this.http.get<Ingredient[]>(`${this.dishUrl}/${dishId}/ingredients`);
   }
+
 
   createDish(item: Dish): Observable<any> {
     return this.http.post(this.dishUrl, item);
@@ -34,8 +37,44 @@ export class ApiService {
     return this.http.put(this.dishUrl, item);
   }
 
+  updateIngredient(item: Ingredient) {
+    return this.http.put(this.ingredientUrl, item);
+
+  }
+
   deleteDish(dishId: number): Observable<any> {
     return this.http.delete(this.dishUrl + `/${dishId}`);
   }
 
+  getIngredients(): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>(this.ingredientUrl);
+  }
+
+  getIngredientsByName(name: string): Observable<Ingredient[]> {
+    if (name.length == 0) {
+      name = 'null';
+    }
+    return this.http.get<Ingredient[]>(`${this.ingredientUrl}/name/${name}`);
+  }
+
+  addIngredientToDish(dishId: number, ingredientId: number) {
+    return this.http.post(`${this.dishUrl}/${dishId}/ingredients/${ingredientId}`, null);
+  }
+
+  removeIngredientFromDish(dishId: number, ingredientId: number) {
+    return this.http.delete(`${this.dishUrl}/${dishId}/ingredients/${ingredientId}`);
+  }
+
+  deleteIngredient(id: number) {
+    return this.http.delete(`${this.ingredientUrl}/${id}`);
+
+  }
+
+  createIngredient(ingredient: Ingredient) {
+    return this.http.post(this.ingredientUrl, ingredient);
+  }
+
+  getIngredient(ingId: number) {
+    return this.http.get<Ingredient>(`${this.ingredientUrl}/${ingId}`);
+  }
 }

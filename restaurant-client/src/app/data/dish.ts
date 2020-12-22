@@ -5,7 +5,7 @@ export class Dish {
   public price: number;
   public name: string;
   public description: string;
-  public portionWeight: string;
-  public cookMinutes: string;
+  public portionWeight: number;
+  public cookMinutes: number;
   public ingredients: Ingredient[];
 }
