@@ -34,6 +34,9 @@ namespace Restaurant.BLL.BusinessLogic
         public async Task<OrderDto> GetAsync(int id)
         {
             var order = await _orderRepository.Get(id);
+            if (order == null)
+                throw new NotFoundException("Order not found.");
+
             var dtoOrder = _mapper.Map<OrderDto>(order);
             return dtoOrder;
         }

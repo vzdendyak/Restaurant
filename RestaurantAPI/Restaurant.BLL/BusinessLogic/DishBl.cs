@@ -34,6 +34,9 @@ namespace Restaurant.BLL.BusinessLogic
         public async Task<DishDto> GetAsync(int id)
         {
             var dish = await _dishRepository.Get(id);
+            if (dish == null)
+                throw new NotFoundException("Dish not found.");
+
             var dtoDish = _mapper.Map<DishDto>(dish);
             return dtoDish;
         }

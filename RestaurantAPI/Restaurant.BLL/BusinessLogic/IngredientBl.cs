@@ -32,6 +32,9 @@ namespace Restaurant.BLL.BusinessLogic
         public async Task<IngredientDto> GetAsync(int id)
         {
             var ingredient = await _ingredientRepository.Get(id);
+            if (ingredient == null)
+                throw new NotFoundException("Ingredient not found.");
+
             var dtoIngredient = _mapper.Map<IngredientDto>(ingredient);
             return dtoIngredient;
         }
