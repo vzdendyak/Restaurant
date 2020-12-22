@@ -42,6 +42,23 @@ export class OrderComponent implements OnInit {
   }
 
   addNewOrder() {
+    console.log(this.numberTable + this.ownerName);
+    if (this.isAddNew && this.numberTable != 0 && this.ownerName != '') {
+      const order: Order = {
+        id: 0,
+        tableNumber: Number(this.numberTable),
+        ownerName: this.ownerName,
+        totalPrice: 0,
+        dishOrder: null
+      };
+      this.apiService.createOrder(order).subscribe(value => {
+        this.numberTable = 0;
+        this.ownerName = '';
+        this.refresh();
+      });
+    }
+    this.numberTable = null;
+    this.ownerName = '';
     this.isAddNew = !this.isAddNew;
   }
 

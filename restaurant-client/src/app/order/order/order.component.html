@@ -2,10 +2,11 @@
     <button class="add-button" (click)="addNewOrder()">New order</button>
 
     <div *ngIf="isAddNew">
-        <input type="text" class="form-control w-25  mt-1 m-auto block-input" [(ngModel)]="numberTable"
+        <input type="number" class="form-control w-25  mt-1 block-input" [(ngModel)]="numberTable"
             placeholder="Enter table number">
-        <input type="text" class="form-control w-25  mt-1 m-auto block-input" [(ngModel)]="ownerName"
+        <input type="text" class="form-control w-25  mt-1 block-input" [(ngModel)]="ownerName"
             placeholder="Enter client name">
+    </div>
 
     <ul class="orders">
         <li class="order" *ngFor="let o of orders">

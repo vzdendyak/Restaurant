@@ -69,7 +69,6 @@ export class ApiService {
 
   deleteIngredient(id: number) {
     return this.http.delete(`${this.ingredientUrl}/${id}`);
-
   }
 
   createIngredient(ingredient: Ingredient) {
@@ -90,11 +89,15 @@ export class ApiService {
     return this.http.get<DishOrder[]>(`${this.orderUrl}/dishOrders/${ordersId}`);
   }
 
-  createOrde(item: Order): Observable<any> {
+  createOrder(item: Order): Observable<any> {
     return this.http.post(this.orderUrl, item);
   }
 
   removeDishFromOrder(dishOrdersId: number) {
     return this.http.delete(`${this.orderUrl}/dishOrders/${dishOrdersId}`);
   }
+
+ /*  addDishToOrder(order: Order) {
+    return this.http.post(`${this.orderUrl}/dishOrders`, order);
+  } */
 }
