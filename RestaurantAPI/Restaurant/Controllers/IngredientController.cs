@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Restaurant.BLL.BusinessLogic.Interfaces;
+using Restaurant.BLL.Data.DTOs;
 using System.Threading.Tasks;
 
 namespace Restaurant.Controllers
@@ -7,27 +9,55 @@ namespace Restaurant.Controllers
     [ApiController]
     public class IngredientController : ControllerBase
     {
-        //private readonly IMediator _mediator;
+        private readonly IIngredientBl _ingredientBl;
+        private readonly IDishBl _dishBl;
 
-        //public IngredientController(IMediator mediator)
-        //{
-        //    _mediator = mediator;
-        //}
+        public IngredientController(IIngredientBl ingredientBl, IDishBl dishBl)
+        {
+            _ingredientBl = ingredientBl;
+            _dishBl = dishBl;
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateAsync([FromBody] Ingredient ingredient)
-        //{
-        //    var createCommand = new CreateIngredient.Command(ingredient);
-        //    var res = await _mediator.Send(createCommand);
-        //    return Ok(res);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var dishes = await _ingredientBl.GetAllAsync();
+            return Ok(dishes);
+        }
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteAsync(int id)
-        //{
-        //    var command = new DeleteIngredient.Command(id);
-        //    var res = await _mediator.Send(command);
-        //    return Ok(res);
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAsync(int id)
+        {
+            var dishes = await _ingredientBl.GetAsync(id);
+            return Ok(dishes);
+        }
+
+        [HttpGet("{id}/dishes")]
+        public async Task<IActionResult> GetDishesByIngredient(int id)
+        {
+            var dishes = await _dishBl.GetByIngredient(id);
+            return Ok(dishes);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync([FromBody] IngredientDto ingredient)
+        {
+            await _ingredientBl.CreateAsync(ingredient);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody] IngredientDto ingredient)
+        {
+            await _ingredientBl.UpdateAsync(ingredient);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            await _ingredientBl.DeleteAsync(id);
+            return Ok();
+        }
     }
 }

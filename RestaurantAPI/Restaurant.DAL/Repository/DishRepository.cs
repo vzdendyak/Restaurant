@@ -63,5 +63,11 @@ namespace Restaurant.DAL.Repository
             _context.DishIngredients.RemoveRange(relation);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Dish>> GetByIngredient(int ingredientId)
+        {
+            var dishes = await _context.DishIngredients.Where(di => di.IngredientId == ingredientId).Select(d => d.Dish).ToListAsync();
+            return dishes;
+        }
     }
 }

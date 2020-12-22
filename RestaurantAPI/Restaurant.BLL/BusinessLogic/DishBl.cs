@@ -62,7 +62,14 @@ namespace Restaurant.BLL.BusinessLogic
 
         public async Task DeleteIngredientFromDish(int dishId, int ingredientId)
         {
-            await _dishRepository.AddIngredientToDish(dishId, ingredientId);
+            await _dishRepository.RemoveIngredientFromDish(dishId, ingredientId);
+        }
+
+        public async Task<IEnumerable<DishDto>> GetByIngredient(int ingredientId)
+        {
+            var dishes = await _dishRepository.GetByIngredient(ingredientId);
+            var dtoDishes = _mapper.Map<IEnumerable<Dish>, IEnumerable<DishDto>>(dishes);
+            return dtoDishes;
         }
     }
 }

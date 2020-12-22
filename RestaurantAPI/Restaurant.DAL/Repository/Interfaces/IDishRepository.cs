@@ -14,6 +14,8 @@ namespace Restaurant.DAL.Repository.Interfaces
 
         Task RemoveIngredientFromDish(int dishId, int ingredientId);
 
+        Task<IEnumerable<Dish>> GetByIngredient(int ingredientId);
+
         Task Create(Dish dish);
 
         Task Update(Dish dish);

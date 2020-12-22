@@ -46,8 +46,13 @@ namespace Restaurant
             {
                 options.AddPolicy("AllowAllOrigin", builder => builder.AllowAnyOrigin());
             });
+
             services.AddScoped<IDishBl, DishBl>();
             services.AddScoped<IDishRepository, DishRepository>();
+
+            services.AddScoped<IIngredientBl, IngredientBl>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+
             services.AddMvcCore().AddApiExplorer();
             services.AddSwaggerGen(options =>
             {

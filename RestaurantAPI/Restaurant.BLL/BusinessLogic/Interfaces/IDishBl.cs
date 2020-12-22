@@ -10,6 +10,8 @@ namespace Restaurant.BLL.BusinessLogic.Interfaces
 
         Task<DishDto> GetAsync(int id);
 
+        Task<IEnumerable<DishDto>> GetByIngredient(int ingredientId);
+
         Task AddIngredientToDish(int dishId, int ingredientId);
 
         Task DeleteIngredientFromDish(int dishId, int ingredientId);

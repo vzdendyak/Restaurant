@@ -1,4 +1,6 @@
-﻿namespace Restaurant.BLL.Data.DTOs
+﻿using System.Collections.Generic;
+
+namespace Restaurant.BLL.Data.DTOs
 {
     public class DishDto
     {
@@ -9,5 +11,6 @@
         public double CookMinutes { get; set; }
         public string Description { get; set; }
         public string PreviewPath { get; set; }
+        public virtual ICollection<DishIngredientDto> DishIngredients { get; set; }
     }
 }

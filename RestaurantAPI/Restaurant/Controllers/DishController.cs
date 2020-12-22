@@ -11,10 +11,12 @@ namespace Restaurant.Controllers
     public class DishController : ControllerBase
     {
         private readonly IDishBl _dishBl;
+        private readonly IIngredientBl _ingredientBl;
 
-        public DishController(IDishBl dishBl)
+        public DishController(IDishBl dishBl, IIngredientBl ingredientBl)
         {
             _dishBl = dishBl;
+            _ingredientBl = ingredientBl;
         }
 
         [HttpGet]
@@ -41,7 +43,7 @@ namespace Restaurant.Controllers
         [HttpDelete("{dishId}/ingredients/{ingredientId}")]
         public async Task<IActionResult> DeleteIngredient(int dishId, int ingredientId)
         {
-            await _dishBl.AddIngredientToDish(dishId, ingredientId);
+            await _dishBl.DeleteIngredientFromDish(dishId, ingredientId);
             return Ok();
         }
 
@@ -72,6 +74,13 @@ namespace Restaurant.Controllers
         {
             await _dishBl.DeleteAsync(id);
             return Ok();
+        }
+
+        [HttpGet("{id}/ingredients")]
+        public async Task<IActionResult> GetDishIngredientsAsync(int id)
+        {
+            var dishes = await _ingredientBl.GetByDish(id);
+            return Ok(dishes);
         }
 
         //[HttpGet("preview/{id}")]
