@@ -94,5 +94,19 @@ namespace Restaurant.BLL.BusinessLogic
             var dtoDishOrders = _mapper.Map<IEnumerable<DishOrders>, IEnumerable<DishOrdersDto>>(dishOrders);
             return dtoDishOrders;
         }
+
+        public async Task<IEnumerable<OrderDto>> GetByTableNumber(int tableNumber)
+        {
+            if (tableNumber == 0)
+            {
+                var orders = await _orderRepository.GetAll();
+                return _mapper.Map<IEnumerable<OrderDto>>(orders);
+            }
+            else
+            {
+                var order = await _orderRepository.GetByTableNumber(tableNumber);
+                return _mapper.Map<IEnumerable<OrderDto>>(order);
+            }
+        }
     }
 }

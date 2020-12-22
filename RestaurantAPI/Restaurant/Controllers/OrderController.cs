@@ -71,5 +71,12 @@ namespace Restaurant.Controllers
             var dishOrders = await _orderBl.GetAllDishesForOrder(ordersId);
             return Ok(dishOrders);
         }
+
+        [HttpGet("table/{number}")]
+        public async Task<IActionResult> GetByTableNumber(int number)
+        {
+            var orders = await _orderBl.GetByTableNumber(number);
+            return Ok(orders);
+        }
     }
 }

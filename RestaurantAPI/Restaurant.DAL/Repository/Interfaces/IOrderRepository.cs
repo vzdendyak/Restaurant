@@ -25,5 +25,7 @@ namespace Restaurant.DAL.Repository.Interfaces
         Task RemoveDishOrderFromOrder(int dishOrderId);
 
         Task<IEnumerable<DishOrders>> GetAllDishesForOrder(int orderId);
+
+        Task<IEnumerable<Order>> GetByTableNumber(int tableNumber);
     }
 }

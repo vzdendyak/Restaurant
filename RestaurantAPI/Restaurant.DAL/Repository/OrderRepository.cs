@@ -75,5 +75,10 @@ namespace Restaurant.DAL.Repository
         {
             return await _context.DishPortions.Where(dp => dp.OrderId == orderId).ToListAsync();
         }
+
+        public async Task<IEnumerable<Order>> GetByTableNumber(int tableNumber)
+        {
+            return await _context.Orders.Where(ing => ing.TableNumber == tableNumber).ToListAsync();
+        }
     }
 }
