@@ -53,6 +53,9 @@ namespace Restaurant
             services.AddScoped<IIngredientBl, IngredientBl>();
             services.AddScoped<IIngredientRepository, IngredientRepository>();
 
+            services.AddScoped<IOrderBl, OrderBl>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+
             services.AddMvcCore().AddApiExplorer();
             services.AddSwaggerGen(options =>
             {
