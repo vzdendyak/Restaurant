@@ -61,7 +61,7 @@ namespace Restaurant.BLL.BusinessLogic
         {
             var realItem = await _ingredientRepository.Get(id);
 
-            if (realItem == null) throw new NotImplementedException();
+            if (realItem == null) throw new NotFoundException();
 
             await _ingredientRepository.Delete(id);
         }
