@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.BusinessLogic.Interfaces;
 using Restaurant.BLL.Data.DTOs;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Restaurant.Controllers

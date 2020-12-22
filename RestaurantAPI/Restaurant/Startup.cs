@@ -1,4 +1,5 @@
 using AutoMapper;
+using MedClinicalAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,9 @@ namespace Restaurant
             services.AddScoped<IIngredientBl, IngredientBl>();
             services.AddScoped<IIngredientRepository, IngredientRepository>();
 
+            services.AddScoped<IOrderBl, OrderBl>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+
             services.AddMvcCore().AddApiExplorer();
             services.AddSwaggerGen(options =>
             {
@@ -79,6 +83,8 @@ namespace Restaurant
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowCredentials().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthorization();
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

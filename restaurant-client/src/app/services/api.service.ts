@@ -1,9 +1,11 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Dish} from '../data/dish';
-import {Ingredient} from '../data/ingredient';
+import { Order } from './../data/order';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Dish } from '../data/dish';
+import { Ingredient } from '../data/ingredient';
+import { DishOrder } from '../data/dishOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ import {Ingredient} from '../data/ingredient';
 export class ApiService {
   dishUrl: string = environment.apiUrl + '/dishes';
   ingredientUrl: string = environment.apiUrl + '/ingredients';
-  orderUrl: string = environment.apiUrl + '/orders  ';
+  orderUrl: string = environment.apiUrl + '/orders';
 
   constructor(private http: HttpClient) {
   }
@@ -67,7 +69,6 @@ export class ApiService {
 
   deleteIngredient(id: number) {
     return this.http.delete(`${this.ingredientUrl}/${id}`);
-
   }
 
   createIngredient(ingredient: Ingredient) {
@@ -76,5 +77,39 @@ export class ApiService {
 
   getIngredient(ingId: number) {
     return this.http.get<Ingredient>(`${this.ingredientUrl}/${ingId}`);
+  }
+
+
+  // Orders
+  getOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.orderUrl}`);
+  }
+
+  getOrderDish(ordersId: number): Observable<DishOrder[]> {
+    return this.http.get<DishOrder[]>(`${this.orderUrl}/dishOrders/${ordersId}`);
+  }
+
+  createOrder(item: Order): Observable<any> {
+    return this.http.post(this.orderUrl, item);
+  }
+
+  deleteOrder(id: number) {
+    return this.http.delete(`${this.orderUrl}/${id}`);
+  }
+
+  removeDishFromOrder(dishOrdersId: number) {
+    return this.http.delete(`${this.orderUrl}/dishOrders/${dishOrdersId}`);
+  }
+
+  addDishToOrder(dishOrder: DishOrder) {
+    return this.http.post(`${this.orderUrl}/dishOrders`, dishOrder);
+  }
+
+  searchByTableNumber(tableNumber: number): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.orderUrl}/table/${tableNumber}`);
+  }
+
+  updateOrder(item: Order): Observable<any> {
+    return this.http.put(this.orderUrl, item);
   }
 }

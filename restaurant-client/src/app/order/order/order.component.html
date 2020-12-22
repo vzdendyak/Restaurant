@@ -1,1 +1,57 @@
-<p>order works!</p>
+<div class="container">
+
+    <input type="number" class="form-control w-25  mt-1 block-input" [(ngModel)]="tableForSearch"
+        placeholder="Search by table number" (keyup.enter)="searchByTableNumber()">
+
+    <button class="add-button" (click)="addNewOrder()">New order</button>
+    <div *ngIf="isAddNew">
+        <input type="number" class="form-control w-25  mt-1 block-input" [(ngModel)]="numberTable"
+            placeholder="Enter table number">
+        <input type="text" class="form-control w-25  mt-1 block-input" [(ngModel)]="ownerName"
+            placeholder="Enter client name">
+    </div>
+
+
+
+    <ul class="orders">
+        <li class="order" *ngFor="let o of orders">
+            Order №: {{o.id}}
+            <div class="info pl-5">
+                <p class="table-number">Number of table: {{o.tableNumber}}</p>
+                <p class="owner-name">Client name: {{o.ownerName}}</p>
+                <p class="cook">Total price: {{o.totalPrice}}</p>
+                <span>Dishes:</span>
+                <ul class="dishes" *ngFor="let d of o.dishOrder">
+                    <li class="dish-order">
+                        <a class="dish-name" [routerLink]="['/dishes/' + d.dishId]">
+                            {{d.dish.name}} - {{d.portionNumber}} portions
+                        </a>
+                        <button class="remove-dish-button" (click)="removeDishFromOrder(d.id)">Remove dish</button>
+                    </li>
+                </ul>
+
+                <button class="add-dish-button" (click)="addDishToOrder(o.id)">Add dish to order</button>
+                <br>
+                <div *ngIf="isAddDishToOrder && o.id == choseOrderId">
+                        <select [(ngModel)]="selectedValue">
+                            <option *ngFor="let di of dishes" [ngValue]="di.id" (click)="show()">{{di.name}}</option>
+                        </select>
+                        <input type="number" class="form-control w-25  mt-1 flex-input" [(ngModel)]="portionNumber"
+                            placeholder="Enter portion number">
+                        <button class="add-dish-button" (click)="addDishToOrderSubmit(o.id)">Add</button>
+                </div>
+
+                <button class="add-dish-button" (click)="updateOrder(o)">Update</button>
+                <div class="update" *ngIf="isUpdate && o.id == choseOrderId">
+                    <input type="number" class="form-control w-25  mt-1 block-input" [(ngModel)]="numberTable"
+                        placeholder="Enter table number">
+                    <input type="text" class="form-control w-25  mt-1 block-input" [(ngModel)]="ownerName"
+                        placeholder="Enter client name">
+                </div>
+                <br>
+                <button class="delete-order-button" (click)="deleteOrder(o.id)">Delete order</button>
+                <br>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "restaurant-client"
+    }
+  },
+  "defaultProject": "restaurant-client",
+  "cli": {
+    "analytics": false
+  }
 }
