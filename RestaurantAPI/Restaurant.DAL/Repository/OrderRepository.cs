@@ -26,7 +26,17 @@ namespace Restaurant.DAL.Repository
 
         public async Task<Order> Get(int id)
         {
-            return await _context.Orders.Where(d => d.Id == id).FirstOrDefaultAsync();
+            var order = await _context.Orders.Where(d => d.Id == id).FirstOrDefaultAsync();
+
+            var dishOrders = await _context.DishPortions.Where(dp => dp.OrderId == order.Id).ToListAsync();
+
+            foreach (DishOrders dishOrder in dishOrders)
+            {
+                var dish = await _context.Dishes.Where(d => d.Id == dishOrder.DishId).FirstOrDefaultAsync();
+                order.TotalPrice += dish.Price * dishOrder.PortionNumber;
+            }
+
+            return order;
         }
 
         public async Task Create(Order order)
@@ -71,6 +81,11 @@ namespace Restaurant.DAL.Repository
 
             _context.DishPortions.Remove(result);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<DishOrders>> GetAllDishOrdersByOrderId(int orderId)
+        {
+            return await _context.DishPortions.Where(dp => dp.OrderId == orderId).ToListAsync();
         }
     }
 }

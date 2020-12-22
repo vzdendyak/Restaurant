@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.BusinessLogic.Interfaces;
 using Restaurant.BLL.Data.DTOs;
+using System.Threading.Tasks;
 
 namespace Restaurant.Controllers
 {
@@ -69,12 +65,12 @@ namespace Restaurant.Controllers
             return Ok();
         }
 
-        //private readonly IMediator _mediator;
-
-        //public OrderController(IMediator mediator)
-        //{
-        //    _mediator = mediator;
-        //}
+        [HttpGet("dishOrders/{ordersId}")]
+        public async Task<IActionResult> GetAllDishOrdersByOrderId(int ordersId)
+        {
+            var dishOrders = await _orderBl.GetAllDishOrdersByOrderId(ordersId);
+            return Ok(dishOrders);
+        }
 
         //[HttpPost]
         //public async Task<IActionResult> CreateAsync([FromBody] Order order)

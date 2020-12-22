@@ -12,8 +12,6 @@ namespace Restaurant.DAL.Repository.Interfaces
 
         Task<Order> Get(int id);
 
-        //Task<IEnumerable<Order>> GetByIngredient(int ingredientId);
-
         Task Create(Order order);
 
         Task Update(Order order);
@@ -25,5 +23,7 @@ namespace Restaurant.DAL.Repository.Interfaces
         Task AddDishOrderToOrder(DishOrders dishOrders);
 
         Task RemoveDishOrderFromOrder(int dishOrderId);
+
+        Task<IEnumerable<DishOrders>> GetAllDishOrdersByOrderId(int orderId);
     }
 }

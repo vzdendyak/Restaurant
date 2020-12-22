@@ -12,7 +12,6 @@ namespace Restaurant.BLL.BusinessLogic.Interfaces
 
         Task<OrderDto> GetAsync(int id);
 
-        //Task DeleteIngredientFromDish(int dishId, int ingredientId);
         Task CreateAsync(OrderDto order);
 
         Task UpdateAsync(OrderDto order);
@@ -22,5 +21,7 @@ namespace Restaurant.BLL.BusinessLogic.Interfaces
         Task AddDishOrderToOrder(DishOrdersDto dishOrders);
 
         Task RemoveDishOrderFromOrder(int dishOrderId);
+
+        Task<IEnumerable<DishOrdersDto>> GetAllDishOrdersByOrderId(int orderId);
     }
 }

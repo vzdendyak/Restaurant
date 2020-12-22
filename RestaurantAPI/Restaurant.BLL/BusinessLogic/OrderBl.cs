@@ -70,5 +70,12 @@ namespace Restaurant.BLL.BusinessLogic
 
             await _orderRepository.RemoveDishOrderFromOrder(dishOrderId);
         }
+
+        public async Task<IEnumerable<DishOrdersDto>> GetAllDishOrdersByOrderId(int orderId)
+        {
+            var dishOrders = await _orderRepository.GetAllDishOrdersByOrderId(orderId);
+            var dtoDishOrders = _mapper.Map<IEnumerable<DishOrders>, IEnumerable<DishOrdersDto>>(dishOrders);
+            return dtoDishOrders;
+        }
     }
 }
