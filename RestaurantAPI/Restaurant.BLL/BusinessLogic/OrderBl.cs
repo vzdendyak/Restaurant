@@ -55,5 +55,20 @@ namespace Restaurant.BLL.BusinessLogic
 
             await _orderRepository.Delete(id);
         }
+
+        public async Task AddDishOrderToOrder(DishOrdersDto dishOrders)
+        {
+            var origDishOrders = _mapper.Map<DishOrdersDto, DishOrders>(dishOrders);
+            await _orderRepository.AddDishOrderToOrder(origDishOrders);
+        }
+
+        public async Task RemoveDishOrderFromOrder(int dishOrderId)
+        {
+            var realItem = await _orderRepository.GetDishOrder(dishOrderId);
+
+            if (realItem == null) throw new NotImplementedException();
+
+            await _orderRepository.RemoveDishOrderFromOrder(dishOrderId);
+        }
     }
 }

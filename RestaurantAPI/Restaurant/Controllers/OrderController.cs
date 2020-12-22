@@ -55,6 +55,20 @@ namespace Restaurant.Controllers
             return Ok();
         }
 
+        [HttpPost("dishOrders")]
+        public async Task<IActionResult> AddDishOrderToOrderAsync([FromBody] DishOrdersDto dishOrders)
+        {
+            await _orderBl.AddDishOrderToOrder(dishOrders);
+            return Ok();
+        }
+
+        [HttpDelete("dishOrders/{dishOrdersId}")]
+        public async Task<IActionResult> RemoveDishOrderFromOrder(int dishOrdersId)
+        {
+            await _orderBl.RemoveDishOrderFromOrder(dishOrdersId);
+            return Ok();
+        }
+
         //private readonly IMediator _mediator;
 
         //public OrderController(IMediator mediator)

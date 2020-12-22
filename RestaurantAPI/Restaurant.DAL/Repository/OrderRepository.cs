@@ -51,5 +51,26 @@ namespace Restaurant.DAL.Repository
             _context.Orders.Remove(result);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<DishOrders> GetDishOrder(int dishOrderId)
+        {
+            return await _context.DishPortions.Where(d => d.Id == dishOrderId).FirstOrDefaultAsync();
+        }
+
+        public async Task AddDishOrderToOrder(DishOrders dishOrders)
+        {
+            await _context.DishPortions.AddAsync(dishOrders);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveDishOrderFromOrder(int dishOrderId)
+        {
+            var result = await _context.DishPortions.FindAsync(dishOrderId);
+            if (result == null)
+                return;
+
+            _context.DishPortions.Remove(result);
+            await _context.SaveChangesAsync();
+        }
     }
 }

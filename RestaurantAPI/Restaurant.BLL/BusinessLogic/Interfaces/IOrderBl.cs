@@ -12,15 +12,15 @@ namespace Restaurant.BLL.BusinessLogic.Interfaces
 
         Task<OrderDto> GetAsync(int id);
 
-        //Task<IEnumerable<OrderDto>> GetByIngredient(int ingredientId);
-
-        //Task AddIngredientToDish(int dishId, int ingredientId);
-
         //Task DeleteIngredientFromDish(int dishId, int ingredientId);
         Task CreateAsync(OrderDto order);
 
         Task UpdateAsync(OrderDto order);
 
         Task DeleteAsync(int id);
+
+        Task AddDishOrderToOrder(DishOrdersDto dishOrders);
+
+        Task RemoveDishOrderFromOrder(int dishOrderId);
     }
 }
