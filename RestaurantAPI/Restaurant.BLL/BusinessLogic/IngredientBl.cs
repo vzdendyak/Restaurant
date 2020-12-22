@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MedClinicalAPI.Exceptions;
 using Restaurant.BLL.BusinessLogic.Interfaces;
 using Restaurant.BLL.Data.DTOs;
 using Restaurant.DAL.Data.Models;
@@ -50,7 +51,7 @@ namespace Restaurant.BLL.BusinessLogic
         {
             var realItem = await _ingredientRepository.Get(id);
 
-            if (realItem == null) throw new NotImplementedException();
+            if (realItem == null) throw new NotFoundException();
 
             await _ingredientRepository.Delete(id);
         }
