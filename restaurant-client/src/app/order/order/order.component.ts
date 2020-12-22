@@ -62,6 +62,13 @@ export class OrderComponent implements OnInit {
     this.isAddNew = !this.isAddNew;
   }
 
+  deleteOrder(id: number) {
+    this.apiService.deleteOrder(id).subscribe(value => {
+      console.log(value);
+      this.refresh();
+    });
+  }
+
   addDishToOrder() {
     console.log("addDishToOrder");
   }

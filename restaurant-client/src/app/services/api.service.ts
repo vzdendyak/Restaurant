@@ -93,6 +93,10 @@ export class ApiService {
     return this.http.post(this.orderUrl, item);
   }
 
+  deleteOrder(id: number) {
+    return this.http.delete(`${this.orderUrl}/${id}`);
+  }
+
   removeDishFromOrder(dishOrdersId: number) {
     return this.http.delete(`${this.orderUrl}/dishOrders/${dishOrdersId}`);
   }
