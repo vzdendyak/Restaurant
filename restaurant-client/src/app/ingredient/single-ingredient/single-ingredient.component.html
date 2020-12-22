@@ -1,0 +1,14 @@
+<div class="container" *ngIf="ingredient">
+  <span>Id: {{ingredient.id}}</span>
+  <div>
+    <label for="portion">Name</label>
+    <input type="text" id="portion" class="price" [disabled]="!isEdit" [(ngModel)]="ingredient.name"/>
+
+  </div>
+  <div>
+
+    <button class="btm btn-primary" (click)="edit()">Edit</button>
+    <button class="btm btn-primary" (click)="save()">Save</button>
+  </div>
+
+</div>

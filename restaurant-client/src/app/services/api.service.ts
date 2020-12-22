@@ -37,6 +37,11 @@ export class ApiService {
     return this.http.put(this.dishUrl, item);
   }
 
+  updateIngredient(item: Ingredient) {
+    return this.http.put(this.ingredientUrl, item);
+
+  }
+
   deleteDish(dishId: number): Observable<any> {
     return this.http.delete(this.dishUrl + `/${dishId}`);
   }
@@ -67,5 +72,9 @@ export class ApiService {
 
   createIngredient(ingredient: Ingredient) {
     return this.http.post(this.ingredientUrl, ingredient);
+  }
+
+  getIngredient(ingId: number) {
+    return this.http.get<Ingredient>(`${this.ingredientUrl}/${ingId}`);
   }
 }

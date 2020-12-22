@@ -10,6 +10,7 @@ import {ApiService} from '../../services/api.service';
 export class IngredientListComponent implements OnInit {
   ingredients: Ingredient[];
   newIngName = '';
+  isEdit = false;
 
   constructor(private api: ApiService) {
 

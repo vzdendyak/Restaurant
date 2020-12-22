@@ -2,9 +2,10 @@
   <ul class="ingredients">
     <li class="ing" *ngFor="let i of ingredients">
       <span><b>ID:</b> {{i.id}}</span>
-      <span class="p-4"><b>Name:</b>{{i.name}}</span>
+      <a class="p-4" [routerLink]="['/ingredient/' + i.id]"><b>Name:</b>{{i.name}}</a>
       <button class="btn btn-danger" (click)="delete(i.id)">Delete</button>
       </li>
   </ul>
   <input type="text"  class="form-control w-25  mt-1 m-auto block-input" [(ngModel)]="newIngName" (keyup.enter)="addIngredient()" placeholder="Enter ingredient name">
+
 </div>

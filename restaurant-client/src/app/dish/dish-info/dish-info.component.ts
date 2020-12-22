@@ -41,7 +41,14 @@ export class DishInfoComponent implements OnInit {
 
 
   saveDish() {
+    this.dish.price = parseInt(String(this.dish.price));
+    this.dish.portionWeight = parseInt(String(this.dish.portionWeight));
+    this.dish.cookMinutes = parseInt(String(this.dish.cookMinutes));
     console.log(this.dish);
+
+    this.apiService.updateDish(this.dish).subscribe(value => {
+      console.log(value);
+    });
   }
 
   edit() {
