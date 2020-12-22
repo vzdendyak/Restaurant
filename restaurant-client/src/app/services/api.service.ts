@@ -59,4 +59,13 @@ export class ApiService {
   removeIngredientFromDish(dishId: number, ingredientId: number) {
     return this.http.delete(`${this.dishUrl}/${dishId}/ingredients/${ingredientId}`);
   }
+
+  deleteIngredient(id: number) {
+    return this.http.delete(`${this.ingredientUrl}/${id}`);
+
+  }
+
+  createIngredient(ingredient: Ingredient) {
+    return this.http.post(this.ingredientUrl, ingredient);
+  }
 }
