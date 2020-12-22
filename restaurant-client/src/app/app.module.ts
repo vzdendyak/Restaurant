@@ -11,6 +11,8 @@ import {RouterModule} from '@angular/router';
 import {ApiService} from './services/api.service';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatOptionModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import {FormsModule} from '@angular/forms';
         {path: '**', redirectTo: 'menu'}
       ]),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatAutocompleteModule,
+    MatOptionModule
   ],
   providers: [ApiService ],
   bootstrap: [AppComponent]

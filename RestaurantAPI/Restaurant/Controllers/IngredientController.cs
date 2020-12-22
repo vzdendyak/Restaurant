@@ -39,6 +39,13 @@ namespace Restaurant.Controllers
             return Ok(dishes);
         }
 
+        [HttpGet("name/{name}")]
+        public async Task<IActionResult> GetByName(string name)
+        {
+            var dishes = await _ingredientBl.GetByName(name);
+            return Ok(dishes);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] IngredientDto ingredient)
         {

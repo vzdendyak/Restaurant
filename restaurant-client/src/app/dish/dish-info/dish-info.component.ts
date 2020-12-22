@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {ActivatedRoute} from '@angular/router';
 import {Dish} from '../../data/dish';
+import {Ingredient} from '../../data/ingredient';
+import {MatOptionSelectionChange} from '@angular/material/core';
 
 @Component({
   selector: 'app-dish-info',
@@ -11,9 +13,15 @@ import {Dish} from '../../data/dish';
 export class DishInfoComponent implements OnInit {
   dishId: number;
   dish: Dish;
-  isEdit: boolean = false;
+  isEdit = false;
+  ingredientsAll: Ingredient[];
+  searchText = '';
 
   constructor(private route: ActivatedRoute, private apiService: ApiService) {
+    this.apiService.getIngredients().subscribe(value => {
+      this.ingredientsAll = value;
+      console.log(this.ingredientsAll);
+    });
     this.route.params.subscribe(params => {
       if (params.id) {
         this.dishId = params.id;
@@ -31,11 +39,36 @@ export class DishInfoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
   saveDish() {
     console.log(this.dish);
   }
 
   edit() {
     this.isEdit = !this.isEdit;
+  }
+
+  updIngredients() {
+    this.apiService.getIngredientsByName(this.searchText).subscribe(value => {
+      this.ingredientsAll = value;
+    });
+  }
+
+  addIngredient(event: MatOptionSelectionChange) {
+    console.log(event.source.value);
+    const ing = event.source.value;
+    this.apiService.addIngredientToDish(this.dishId, ing.id).subscribe(value => {
+      this.dish.ingredients.push(ing);
+    });
+  }
+
+  deleteIngredient(id: number) {
+    console.log(id);
+    const index = this.dish.ingredients.findIndex(i => i.id == id);
+    if (index > -1) {
+      this.apiService.removeIngredientFromDish(this.dishId, id).subscribe(value => {
+        this.dish.ingredients.splice(index, 1);
+      });
+    }
   }
 }

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using MedClinicalAPI.Exceptions;
 using Restaurant.BLL.BusinessLogic.Interfaces;
 using Restaurant.BLL.Data.DTOs;
 using Restaurant.DAL.Data.Models;
 using Restaurant.DAL.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Restaurant.BLL.BusinessLogic
@@ -13,11 +15,13 @@ namespace Restaurant.BLL.BusinessLogic
     {
         private readonly IDishRepository _dishRepository;
         private readonly IMapper _mapper;
+        private readonly IIngredientRepository _ingredientRepository;
 
-        public DishBl(IDishRepository dishRepository, IMapper mapper)
+        public DishBl(IDishRepository dishRepository, IMapper mapper, IIngredientRepository ingredientRepository)
         {
             _dishRepository = dishRepository;
             _mapper = mapper;
+            _ingredientRepository = ingredientRepository;
         }
 
         public async Task<IEnumerable<DishDto>> GetAllAsync()
@@ -57,6 +61,10 @@ namespace Restaurant.BLL.BusinessLogic
 
         public async Task AddIngredientToDish(int dishId, int ingredientId)
         {
+            var existingIngredients = await _ingredientRepository.GetByDish(dishId);
+            if (existingIngredients.Any(i => i.Id == ingredientId))
+                throw new BadRequestException("This ingredient is already exist in dish");
+
             await _dishRepository.AddIngredientToDish(dishId, ingredientId);
         }
 
