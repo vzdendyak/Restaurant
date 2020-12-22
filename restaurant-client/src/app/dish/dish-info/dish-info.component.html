@@ -1,1 +1,27 @@
-<p>dish-info works!</p>
+<div class="container" *ngIf="dish">
+  <div class="dish-name">
+    {{dish.name}}
+  </div>
+  <div class="info pl-5 d-flex">
+    <label for="dishPrice">Price</label>
+    <input type="text" id="dishPrice" [disabled]="!isEdit" class="price" [(ngModel)]="dish.price"/>
+
+    <label for="portion">Portion</label>
+    <input type="text" id="portion" class="price" [disabled]="!isEdit" [(ngModel)]="dish.portionWeight"/>
+
+    <label for="time">Cook time</label>
+    <input type="text" id="time" class="price" [disabled]="!isEdit" [(ngModel)]="dish.cookMinutes"/>
+
+    <label for="description">Description</label>
+    <input type="text" id="description" class="price" [disabled]="!isEdit" [(ngModel)]="dish.description"/>
+
+    <span>Ingredients:</span>
+    <ul class="ingredients" *ngFor="let i of dish.ingredients">
+      <li class="ingredient">
+        {{i.name}}
+      </li>
+    </ul>
+  </div>
+  <button class="btm btn-primary" (click)="edit()">Edit</button>
+  <button class="btm btn-primary" (click)="saveDish()">Save</button>
+</div>

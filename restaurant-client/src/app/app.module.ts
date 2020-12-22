@@ -1,18 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { MenuComponent } from './menu/menu/menu.component';
-import { MenuListComponent } from './menu/menu-list/menu-list.component';
-import { DishInfoComponent } from './dish/dish-info/dish-info.component';
-import { IngredientListComponent } from './ingredient/ingredient-list/ingredient-list.component';
-import { OrderComponent } from './order/order/order.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {MenuListComponent} from './menu/menu-list/menu-list.component';
+import {DishInfoComponent} from './dish/dish-info/dish-info.component';
+import {IngredientListComponent} from './ingredient/ingredient-list/ingredient-list.component';
+import {OrderComponent} from './order/order/order.component';
+import {RouterModule} from '@angular/router';
+import {ApiService} from './services/api.service';
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
     MenuListComponent,
     DishInfoComponent,
     IngredientListComponent,
@@ -20,9 +22,20 @@ import { OrderComponent } from './order/order/order.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule.forRoot(
+      [
+        {path: 'menu', component: MenuListComponent},
+        {path: 'dishes/:id', component: DishInfoComponent},
+        {path: 'ingredients', component: IngredientListComponent},
+        {path: 'order', component: OrderComponent},
+        {path: '**', redirectTo: 'menu'}
+      ]),
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [ApiService ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
