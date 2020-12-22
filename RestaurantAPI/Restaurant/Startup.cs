@@ -27,7 +27,7 @@ namespace Restaurant
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration.GetConnectionString("LocalDb");
+            string connectionString = Configuration.GetConnectionString("RemoteDb");
             services.AddEntityFrameworkSqlServer().AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
