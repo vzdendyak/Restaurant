@@ -32,14 +32,14 @@
                 <br>
                 <div *ngIf="isAddDishToOrder">
                     <div *ngIf="o.id == choseOrderId">
-                        <ul class="dishes" *ngFor="let di of dishes">
-                            <li class="dish-order">
-                                {{di.name}}
-                                <input type="number" class="form-control w-25  mt-1 flex-input"
-                                    [(ngModel)]="portionNumber" placeholder="Enter portion number">
-                                <button class="add-dish-button" (click)="addDishToOrderSubmit(o.id,di.id)">Add</button>
-                            </li>
-                        </ul>
+
+                        <select [(ngModel)]="selectedValue">
+                            <option *ngFor="let di of dishes" [ngValue]="di.id" (click)="show()">{{di.name}}</option>
+                        </select>
+                        <input type="number" class="form-control w-25  mt-1 flex-input" [(ngModel)]="portionNumber"
+                            placeholder="Enter portion number">
+                        <button class="add-dish-button" (click)="addDishToOrderSubmit(o.id)">Add</button>
+
                     </div>
                 </div>
             </div>

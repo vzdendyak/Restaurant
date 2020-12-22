@@ -28,6 +28,8 @@ export class OrderComponent implements OnInit {
 
   portionNumber: number = null;
 
+  selectedValue: string;
+
   constructor(private apiService: ApiService, public dialog: MatDialog, private router: Router) {
 
   }
@@ -59,6 +61,10 @@ export class OrderComponent implements OnInit {
         });
       });
     });
+  }
+
+  show(orderId: number) {
+    console.log(this.selectedValue + "  " + orderId);
   }
 
   addNewOrder() {
@@ -95,13 +101,13 @@ export class OrderComponent implements OnInit {
     this.isAddDishToOrder = !this.isAddDishToOrder;
   }
 
-  addDishToOrderSubmit(orderId: number, dishId: number) {
-    console.log(dishId + "   " + orderId);
-    if (this.portionNumber != 0) {
+  addDishToOrderSubmit(orderId: number) {
+    console.log(this.selectedValue + "   " + orderId);
+    if (this.portionNumber != 0 && this.selectedValue != "") {
       const dishOrder: DishOrder = {
         id: 0,
         orderId: orderId,
-        dishId: dishId,
+        dishId: Number(this.selectedValue),
         portionNumber: this.portionNumber,
         dish: null
       };
