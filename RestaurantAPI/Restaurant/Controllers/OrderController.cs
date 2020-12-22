@@ -52,9 +52,9 @@ namespace Restaurant.Controllers
         }
 
         [HttpPost("dishOrders")]
-        public async Task<IActionResult> AddDishOrderToOrderAsync([FromBody] DishOrdersDto dishOrders)
+        public async Task<IActionResult> AddDishToOrderAsync([FromBody] DishOrdersDto dishOrders)
         {
-            await _orderBl.AddDishOrderToOrder(dishOrders);
+            await _orderBl.AddDishToOrderAsync(dishOrders);
             return Ok();
         }
 
@@ -66,9 +66,9 @@ namespace Restaurant.Controllers
         }
 
         [HttpGet("dishOrders/{ordersId}")]
-        public async Task<IActionResult> GetAllDishOrdersByOrderId(int ordersId)
+        public async Task<IActionResult> GetAllDishesForOrder(int ordersId)
         {
-            var dishOrders = await _orderBl.GetAllDishOrdersByOrderId(ordersId);
+            var dishOrders = await _orderBl.GetAllDishesForOrder(ordersId);
             return Ok(dishOrders);
         }
     }

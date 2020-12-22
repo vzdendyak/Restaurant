@@ -24,17 +24,7 @@ namespace Restaurant.DAL.Repository
 
         public async Task<Order> Get(int id)
         {
-            var order = await _context.Orders.Where(d => d.Id == id).FirstOrDefaultAsync();
-
-            var dishOrders = await _context.DishPortions.Where(dp => dp.OrderId == order.Id).ToListAsync();
-
-            foreach (DishOrders dishOrder in dishOrders)
-            {
-                var dish = await _context.Dishes.Where(d => d.Id == dishOrder.DishId).FirstOrDefaultAsync();
-                order.TotalPrice += dish.Price * dishOrder.PortionNumber;
-            }
-
-            return order;
+            return await _context.Orders.Where(d => d.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task Create(Order order)
@@ -65,7 +55,7 @@ namespace Restaurant.DAL.Repository
             return await _context.DishPortions.Where(d => d.Id == dishOrderId).FirstOrDefaultAsync();
         }
 
-        public async Task AddDishOrderToOrder(DishOrders dishOrders)
+        public async Task AddDishToOrderAsync(DishOrders dishOrders)
         {
             await _context.DishPortions.AddAsync(dishOrders);
             await _context.SaveChangesAsync();
@@ -81,7 +71,7 @@ namespace Restaurant.DAL.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<DishOrders>> GetAllDishOrdersByOrderId(int orderId)
+        public async Task<IEnumerable<DishOrders>> GetAllDishesForOrder(int orderId)
         {
             return await _context.DishPortions.Where(dp => dp.OrderId == orderId).ToListAsync();
         }

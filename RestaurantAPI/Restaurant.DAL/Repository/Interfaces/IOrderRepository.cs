@@ -20,10 +20,10 @@ namespace Restaurant.DAL.Repository.Interfaces
 
         Task<DishOrders> GetDishOrder(int dishOrderId);
 
-        Task AddDishOrderToOrder(DishOrders dishOrders);
+        Task AddDishToOrderAsync(DishOrders dishOrders);
 
         Task RemoveDishOrderFromOrder(int dishOrderId);
 
-        Task<IEnumerable<DishOrders>> GetAllDishOrdersByOrderId(int orderId);
+        Task<IEnumerable<DishOrders>> GetAllDishesForOrder(int orderId);
     }
 }

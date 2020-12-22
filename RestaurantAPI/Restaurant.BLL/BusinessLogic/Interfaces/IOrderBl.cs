@@ -18,10 +18,10 @@ namespace Restaurant.BLL.BusinessLogic.Interfaces
 
         Task DeleteAsync(int id);
 
-        Task AddDishOrderToOrder(DishOrdersDto dishOrders);
+        Task AddDishToOrderAsync(DishOrdersDto dishOrders);
 
         Task RemoveDishOrderFromOrder(int dishOrderId);
 
-        Task<IEnumerable<DishOrdersDto>> GetAllDishOrdersByOrderId(int orderId);
+        Task<IEnumerable<DishOrdersDto>> GetAllDishesForOrder(int orderId);
     }
 }

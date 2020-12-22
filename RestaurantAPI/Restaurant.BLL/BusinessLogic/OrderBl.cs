@@ -13,11 +13,13 @@ namespace Restaurant.BLL.BusinessLogic
     public class OrderBl : IOrderBl
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IDishRepository _dishRepository;
         private readonly IMapper _mapper;
 
-        public OrderBl(IOrderRepository orderRepository, IMapper mapper)
+        public OrderBl(IOrderRepository orderRepository, IDishRepository dishRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
+            _dishRepository = dishRepository;
             _mapper = mapper;
         }
 
@@ -56,10 +58,18 @@ namespace Restaurant.BLL.BusinessLogic
             await _orderRepository.Delete(id);
         }
 
-        public async Task AddDishOrderToOrder(DishOrdersDto dishOrders)
+        public async Task AddDishToOrderAsync(DishOrdersDto dishOrders)
         {
             var origDishOrders = _mapper.Map<DishOrdersDto, DishOrders>(dishOrders);
-            await _orderRepository.AddDishOrderToOrder(origDishOrders);
+
+            var order = await _orderRepository.Get(dishOrders.OrderId);
+            var dish = await _dishRepository.Get(dishOrders.DishId);
+
+            order.TotalPrice += dish.Price * dishOrders.PortionNumber;
+
+            await _orderRepository.Update(order);
+
+            await _orderRepository.AddDishToOrderAsync(origDishOrders);
         }
 
         public async Task RemoveDishOrderFromOrder(int dishOrderId)
@@ -68,12 +78,19 @@ namespace Restaurant.BLL.BusinessLogic
 
             if (realItem == null) throw new NotImplementedException();
 
+            var order = await _orderRepository.Get(realItem.OrderId);
+            var dish = await _dishRepository.Get(realItem.DishId);
+
+            order.TotalPrice -= dish.Price * realItem.PortionNumber;
+
+            await _orderRepository.Update(order);
+
             await _orderRepository.RemoveDishOrderFromOrder(dishOrderId);
         }
 
-        public async Task<IEnumerable<DishOrdersDto>> GetAllDishOrdersByOrderId(int orderId)
+        public async Task<IEnumerable<DishOrdersDto>> GetAllDishesForOrder(int orderId)
         {
-            var dishOrders = await _orderRepository.GetAllDishOrdersByOrderId(orderId);
+            var dishOrders = await _orderRepository.GetAllDishesForOrder(orderId);
             var dtoDishOrders = _mapper.Map<IEnumerable<DishOrders>, IEnumerable<DishOrdersDto>>(dishOrders);
             return dtoDishOrders;
         }
