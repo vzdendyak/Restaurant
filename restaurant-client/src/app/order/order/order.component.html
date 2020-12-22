@@ -1,1 +1,30 @@
-<p>order works!</p>
+<div class="container">
+    <button class="add-button" (click)="addNewOrder()">New order</button>
+
+    <div *ngIf="isAddNew">
+        <input type="text" class="form-control w-25  mt-1 m-auto block-input" [(ngModel)]="numberTable"
+            placeholder="Enter table number">
+        <input type="text" class="form-control w-25  mt-1 m-auto block-input" [(ngModel)]="ownerName"
+            placeholder="Enter client name">
+
+    <ul class="orders">
+        <li class="order" *ngFor="let o of orders">
+            Order №: {{o.id}}
+            <div class="info pl-5">
+                <p class="table-number">Number of table: {{o.tableNumber}}</p>
+                <p class="owner-name">Client name: {{o.ownerName}}</p>
+                <p class="cook">Total price: {{o.totalPrice}}</p>
+                <span>Dishes:</span>
+                <ul class="dishes" *ngFor="let d of o.dishOrder">
+                    <li class="dish-order">
+                        <a class="dish-name" [routerLink]="['/dishes/' + d.dishId]">
+                            {{d.dish.name}} - {{d.portionNumber}} portions
+                        </a>
+                        <button class="remove-dish-button" (click)="removeDishFromOrder(d.id)">Remove dish</button>
+                    </li>
+                </ul>
+                <button class="add-dish-button" (click)="addDishToOrder()">Add dish to order</button>
+            </div>
+        </li>
+    </ul>
+</div>

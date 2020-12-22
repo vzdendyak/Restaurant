@@ -5,16 +5,16 @@
         {{d.name}}
       </a>
       <div class="info pl-5">
-      <p class="price">Price: {{d.price}}</p>
-      <p class="weight">Portion: {{d.portionWeight}}</p>
-      <p class="cook">Cook time: {{d.cookMinutes}}</p>
-      <p class="description">Description: {{d.description}}</p>
+        <p class="price">Price: {{d.price}}</p>
+        <p class="weight">Portion: {{d.portionWeight}}</p>
+        <p class="cook">Cook time: {{d.cookMinutes}}</p>
+        <p class="description">Description: {{d.description}}</p>
         <span>Ingredients:</span>
-      <ul class="ingredients" *ngFor="let i of d.ingredients">
-        <li class="ingredient">
-          {{i.name}}
-        </li>
-      </ul>
+        <ul class="ingredients" *ngFor="let i of d.ingredients">
+          <li class="ingredient">
+            {{i.name}}
+          </li>
+        </ul>
       </div>
     </li>
   </ul>
