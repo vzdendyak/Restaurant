@@ -1,9 +1,11 @@
+import { DishOrder } from './../../data/dishOrder';
 import { AddOrderComponent } from './../../add-order/add-order.component';
 import { Order } from './../../data/order';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Dish } from 'src/app/data/dish';
 
 @Component({
   selector: 'app-order',
@@ -12,16 +14,34 @@ import { Router } from '@angular/router';
 })
 export class OrderComponent implements OnInit {
 
+  dishes: Dish[];
+
   isAddNew = false;
 
   orders: Order[];
   numberTable: number;
   ownerName: string;
 
+  isAddDishToOrder = false;
+
+  choseOrderId = 0;
+
+  portionNumber: number = null;
+
   constructor(private apiService: ApiService, public dialog: MatDialog, private router: Router) {
+
   }
 
   ngOnInit(): void {
+    this.apiService.getDishes().subscribe(value => {
+      this.dishes = value;
+      this.dishes.forEach((d) => {
+        this.apiService.getDishIngredients(d.id).subscribe(value1 => {
+          d.ingredients = value1;
+          console.log(this.dishes);
+        });
+      });
+    });
     this.refresh();
   }
 
@@ -69,8 +89,27 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  addDishToOrder() {
-    console.log("addDishToOrder");
+  addDishToOrder(orderId: number) {
+    console.log("addDishToOrder " + orderId);
+    this.choseOrderId = orderId;
+    this.isAddDishToOrder = !this.isAddDishToOrder;
+  }
+
+  addDishToOrderSubmit(orderId: number, dishId: number) {
+    console.log(dishId + "   " + orderId);
+    if (this.portionNumber != 0) {
+      const dishOrder: DishOrder = {
+        id: 0,
+        orderId: orderId,
+        dishId: dishId,
+        portionNumber: this.portionNumber,
+        dish: null
+      };
+      this.apiService.addDishToOrder(dishOrder).subscribe(value => {
+        console.log(value);
+        this.refresh();
+      });
+    }
   }
 
   removeDishFromOrder(id: number) {

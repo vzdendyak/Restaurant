@@ -101,7 +101,7 @@ export class ApiService {
     return this.http.delete(`${this.orderUrl}/dishOrders/${dishOrdersId}`);
   }
 
- /*  addDishToOrder(order: Order) {
-    return this.http.post(`${this.orderUrl}/dishOrders`, order);
-  } */
+  addDishToOrder(dishOrder: DishOrder) {
+    return this.http.post(`${this.orderUrl}/dishOrders`, dishOrder);
+  }
 }

@@ -8,9 +8,13 @@
             placeholder="Enter client name">
     </div>
 
+
+
+
     <ul class="orders">
         <li class="order" *ngFor="let o of orders">
             Order №: {{o.id}}
+            <button class="delete-order-button" (click)="deleteOrder(o.id)">Delete order</button>
             <div class="info pl-5">
                 <p class="table-number">Number of table: {{o.tableNumber}}</p>
                 <p class="owner-name">Client name: {{o.ownerName}}</p>
@@ -24,9 +28,20 @@
                         <button class="remove-dish-button" (click)="removeDishFromOrder(d.id)">Remove dish</button>
                     </li>
                 </ul>
-                <button class="add-dish-button" (click)="addDishToOrder()">Add dish to order</button>
+                <button class="add-dish-button" (click)="addDishToOrder(o.id)">Add dish to order</button>
                 <br>
-                <button class="delete-order-button" (click)="deleteOrder(o.id)">Delete order</button>
+                <div *ngIf="isAddDishToOrder">
+                    <div *ngIf="o.id == choseOrderId">
+                        <ul class="dishes" *ngFor="let di of dishes">
+                            <li class="dish-order">
+                                {{di.name}}
+                                <input type="number" class="form-control w-25  mt-1 flex-input"
+                                    [(ngModel)]="portionNumber" placeholder="Enter portion number">
+                                <button class="add-dish-button" (click)="addDishToOrderSubmit(o.id,di.id)">Add</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </li>
     </ul>
