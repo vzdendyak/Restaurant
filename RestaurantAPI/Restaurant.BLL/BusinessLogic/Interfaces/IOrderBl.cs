@@ -23,5 +23,7 @@ namespace Restaurant.BLL.BusinessLogic.Interfaces
         Task RemoveDishOrderFromOrder(int dishOrderId);
 
         Task<IEnumerable<DishOrdersDto>> GetAllDishesForOrder(int orderId);
+
+        Task<IEnumerable<OrderDto>> GetByTableNumber(int tableNumber);
     }
 }

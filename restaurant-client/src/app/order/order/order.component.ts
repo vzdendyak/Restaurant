@@ -14,9 +14,12 @@ import { Dish } from 'src/app/data/dish';
 })
 export class OrderComponent implements OnInit {
 
+  tableForSearch: number = null;
+
   dishes: Dish[];
 
   isAddNew = false;
+  isUpdate = false;
 
   orders: Order[];
   numberTable: number;
@@ -67,6 +70,23 @@ export class OrderComponent implements OnInit {
     console.log(this.selectedValue + "  " + orderId);
   }
 
+  searchByTableNumber() {
+    this.apiService.searchByTableNumber(this.tableForSearch).subscribe(value => {
+      this.orders = value;
+      this.orders.forEach((d) => {
+        this.apiService.getOrderDish(d.id).subscribe(value1 => {
+          d.dishOrder = value1;
+          d.dishOrder.forEach((a) => {
+            this.apiService.getDish(a.dishId).subscribe(value2 => {
+              a.dish = value2;
+              console.log(this.orders);
+            });
+          });
+        });
+      });
+    });
+  }
+
   addNewOrder() {
     console.log(this.numberTable + this.ownerName);
     if (this.isAddNew && this.numberTable != 0 && this.ownerName != '') {
@@ -86,6 +106,26 @@ export class OrderComponent implements OnInit {
     this.numberTable = null;
     this.ownerName = '';
     this.isAddNew = !this.isAddNew;
+  }
+
+  updateOrder(order: Order) {
+    this.choseOrderId = order.id;
+    if (this.isUpdate && this.numberTable != 0 && this.ownerName != '') {
+      const orderUp: Order = {
+        id: order.id,
+        tableNumber: Number(this.numberTable),
+        ownerName: this.ownerName,
+        totalPrice: order.totalPrice,
+        dishOrder: order.dishOrder
+      };
+      console.log(orderUp);
+      this.apiService.updateOrder(orderUp).subscribe(value => {
+        console.log(value);
+        this.refresh();
+      });
+    }
+    this.ownerName = '';
+    this.isUpdate = !this.isUpdate;
   }
 
   deleteOrder(id: number) {

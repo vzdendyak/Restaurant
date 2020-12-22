@@ -104,4 +104,12 @@ export class ApiService {
   addDishToOrder(dishOrder: DishOrder) {
     return this.http.post(`${this.orderUrl}/dishOrders`, dishOrder);
   }
+
+  searchByTableNumber(tableNumber: number): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.orderUrl}/table/${tableNumber}`);
+  }
+
+  updateOrder(item: Order): Observable<any> {
+    return this.http.put(this.orderUrl, item);
+  }
 }

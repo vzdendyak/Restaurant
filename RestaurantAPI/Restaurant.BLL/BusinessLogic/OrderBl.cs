@@ -6,7 +6,7 @@ using Restaurant.DAL.Data.Models;
 using Restaurant.DAL.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Restaurant.BLL.BusinessLogic
@@ -34,6 +34,9 @@ namespace Restaurant.BLL.BusinessLogic
         public async Task<OrderDto> GetAsync(int id)
         {
             var order = await _orderRepository.Get(id);
+            if (order == null)
+                throw new NotFoundException("Order not found.");
+
             var dtoOrder = _mapper.Map<OrderDto>(order);
             return dtoOrder;
         }
@@ -41,6 +44,12 @@ namespace Restaurant.BLL.BusinessLogic
         public async Task CreateAsync(OrderDto order)
         {
             var origOrder = _mapper.Map<OrderDto, Order>(order);
+
+            var orders = await _orderRepository.GetAll();
+            var isOrder = orders.Any(d => d.OwnerName == order.OwnerName && d.TableNumber == order.TableNumber);
+            if (isOrder)
+                throw new BadRequestException("This customer has already placed an order for this table.");
+
             await _orderRepository.Create(origOrder);
         }
 
@@ -94,6 +103,20 @@ namespace Restaurant.BLL.BusinessLogic
             var dishOrders = await _orderRepository.GetAllDishesForOrder(orderId);
             var dtoDishOrders = _mapper.Map<IEnumerable<DishOrders>, IEnumerable<DishOrdersDto>>(dishOrders);
             return dtoDishOrders;
+        }
+
+        public async Task<IEnumerable<OrderDto>> GetByTableNumber(int tableNumber)
+        {
+            if (tableNumber == 0)
+            {
+                var orders = await _orderRepository.GetAll();
+                return _mapper.Map<IEnumerable<OrderDto>>(orders);
+            }
+            else
+            {
+                var order = await _orderRepository.GetByTableNumber(tableNumber);
+                return _mapper.Map<IEnumerable<OrderDto>>(order);
+            }
         }
     }
 }
