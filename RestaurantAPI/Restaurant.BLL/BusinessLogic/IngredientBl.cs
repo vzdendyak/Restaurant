@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using MedClinicalAPI.Exceptions;
 using Restaurant.BLL.BusinessLogic.Interfaces;
 using Restaurant.BLL.Data.DTOs;
 using Restaurant.DAL.Data.Models;
 using Restaurant.DAL.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Restaurant.BLL.BusinessLogic
@@ -37,6 +39,12 @@ namespace Restaurant.BLL.BusinessLogic
         public async Task CreateAsync(IngredientDto ingredient)
         {
             var origIngredient = _mapper.Map<IngredientDto, Ingredient>(ingredient);
+
+            var ingredients = await _ingredientRepository.GetAll();
+            var isIngredient = ingredients.Any(d => d.Name == ingredient.Name);
+            if (isIngredient)
+                throw new BadRequestException("Ingredient with the same name is exist.");
+
             await _ingredientRepository.Create(origIngredient);
         }
 

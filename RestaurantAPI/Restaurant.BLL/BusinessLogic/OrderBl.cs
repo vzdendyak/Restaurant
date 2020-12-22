@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using MedClinicalAPI.Exceptions;
 using Restaurant.BLL.BusinessLogic.Interfaces;
 using Restaurant.BLL.Data.DTOs;
 using Restaurant.DAL.Data.Models;
 using Restaurant.DAL.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Restaurant.BLL.BusinessLogic
@@ -40,6 +41,12 @@ namespace Restaurant.BLL.BusinessLogic
         public async Task CreateAsync(OrderDto order)
         {
             var origOrder = _mapper.Map<OrderDto, Order>(order);
+
+            var orders = await _orderRepository.GetAll();
+            var isOrder = orders.Any(d => d.OwnerName == order.OwnerName && d.TableNumber == order.TableNumber);
+            if (isOrder)
+                throw new BadRequestException("This customer has already placed an order for this table.");
+
             await _orderRepository.Create(origOrder);
         }
 

@@ -41,6 +41,12 @@ namespace Restaurant.BLL.BusinessLogic
         public async Task CreateAsync(DishDto dish)
         {
             var origDish = _mapper.Map<DishDto, Dish>(dish);
+
+            var dishes = await _dishRepository.GetAll();
+            var isDish = dishes.Any(d => d.Name == dish.Name);
+            if (isDish)
+                throw new BadRequestException("Dish with the same name is exist.");
+
             await _dishRepository.Create(origDish);
         }
 
